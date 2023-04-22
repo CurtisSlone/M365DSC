@@ -3,6 +3,12 @@
 ######## FUNCTIONS ########
 function Write-Log
 {
+    param(
+        [Parameter(Mandatory = $true)]
+        [PSCredential]
+        $Credentials
+    )
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
@@ -12,10 +18,6 @@ function Write-Log
         [Parameter()]
         [System.Int32]
         $Level = 0,
-
-        [Parameter(Mandatory = $true)]
-        [PSCredential]
-        $Credentials
     )
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
