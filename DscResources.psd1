@@ -1,3 +1,3 @@
 @{
-    Microsoft365DSC = '1.23.419.1'
+    Microsoft365DSC = '1.22.1019.1'
 }
