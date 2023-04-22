@@ -8,8 +8,19 @@ output "app_name" {
     value = azuread_application.app.display_name
 }
 
+output "app_Id" {
+    value = azuread_application.app.application_id
+}
+output "app_secret" {
+    value = azuread_application_password.apppass.value
+    sensitive = true
+}
+
+output "spn_Id" {
+    value = azuread_application.app.application_id
+}
 output "spn_secret" {
-    value = azuread_service_principal_password.spn_pass.value
+    value = azuread_application_password.apppass.value
     sensitive = true
 }
 

@@ -12,8 +12,18 @@ jobs:
     runs-on: windows-2019
     name: Test PS
     steps:
-      - name: Install PS Modules
+      - name: Install & Update PS Modules
         run: |
+          Install-PackageProvider NuGet -Force
           Install-Module -Name PowerShellGet -Force
           Install-Module 'PSDscResources' -Verbose -Force
           Install-Module Microsoft365DSC -Force
+          Update-M365Dependencies
+      - name: Get Creds
+        run: |
+          $username = ${{secrets.CLIENT_ID}}
+          $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
+          $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+      - name: Test M365 Export
+        run: |
+          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Credential $Credential
