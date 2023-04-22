@@ -25,4 +25,4 @@ jobs:
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
-        run: .\build.ps1 -RunAsAdmin
+          .\build.ps1 -RunAsAdmin
