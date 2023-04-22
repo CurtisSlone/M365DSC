@@ -129,6 +129,7 @@ Write-Log -Message 'Retrieving Credentials' -Level 1
 [array]$datafiles = Get-ChildItem -Path (Join-Path -Path $workingDirectory -ChildPath 'Datafiles') -Filter *.psd1
 Write-Log -Message "Found $($datafiles.Count) data file(s)" -Level 2
 
+$credentials = @{}
 foreach ($datafile in $datafiles)
 {
     Write-Log -Message "Processing: $($datafile.Name)" -Level 3
@@ -142,18 +143,24 @@ foreach ($datafile in $datafiles)
 
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
+    $credentials.$envName = @{}
+    foreach ($function in $envData.NonNodeData.Accounts)
+    {
+        $credentials.$envName.$($function.Workload) = $Credentials
+    }
     
 }
 
 Write-Log -Message ' '
 Write-Log -Message 'Start MOF compilation'
 
+
 foreach ($datafile in $datafiles)
 {
     Write-Log -Message "Processing: $($datafile.Name)" -Level 2
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
-    $null = M365Configuration -Credentials $Credentials -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
+    $null = M365Configuration -Credentials $credentials.$envName -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
 }
 
 Write-Log -Message ' '

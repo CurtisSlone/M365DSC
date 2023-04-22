@@ -15,6 +15,27 @@
             OrganizationName = "checkyourpockets.club"
         }
         
+        Accounts       = @(
+            @{
+                Workload = 'Exchange'
+            }
+            @{
+                Workload = 'Office365'
+            }
+            @{
+                Workload = 'PowerPlatform'
+            }
+            @{
+                Workload = 'SecurityCompliance'
+            }
+            @{
+                Workload = 'SharePoint'
+            }
+            @{
+                Workload = 'Teams'
+            }
+        )
+
         Exchange       = @{
             OrganizationalRelationships = @(
                 @{

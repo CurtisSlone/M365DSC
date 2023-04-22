@@ -4,7 +4,7 @@ Configuration M365Configuration
     param
     (
         [Parameter(Mandatory = $true)]
-        [PSCredential]
+        [System.Collections.Hashtable] 
         $Credentials
     )
     
@@ -15,32 +15,32 @@ Configuration M365Configuration
 
         Exchange 'Exchange_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.Exchange
         }
 
         Office365 'Office365_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.Office365
         }
 
         PowerPlatform 'PowerPlatform_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.PowerPlatform
         }
 
         SecurityCompliance 'SecurityCompliance_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.SecurityCompliance
         }
 
         SharePoint 'SharePoint_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.SharePoint
         }
 
         Teams 'Teams_Configuration'
         {
-            Credential    = $Credentials
+            Credential    = $Credentials.Teams
         }
     }
 }
