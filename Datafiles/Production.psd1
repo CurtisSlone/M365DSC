@@ -19,10 +19,10 @@
         Exchange       = @{
             OrganizationalRelationships = @(
                 @{
-                    Name                  = $domain
+                    Name                  = $ENV:domain
                     ArchiveAccessEnabled  = $false
                     DeliveryReportEnabled = $false
-                    DomainNames           = @($domain)
+                    DomainNames           = @($ENV:domain)
                     Enabled               = $true
                     FreeBusyAccessEnabled = $true
                     FreeBusyAccessLevel   = "LimitedDetails"
@@ -40,7 +40,7 @@
 
             AcceptedDomains             = @(
                 @{
-                    Identity        = $domain
+                    Identity        = $ENV:domain
                     DomainType      = 'Authoritative'
                     MatchSubDomains = $false
                     OutboundOnly    = $false
@@ -50,7 +50,7 @@
 
             DKIM                        = @(
                 @{
-                    Identity               = $domain
+                    Identity               = $ENV:domain
                     Enabled                = $true
                     AdminDisplayName       = ''
                     BodyCanonicalization   = 'Relaxed'
