@@ -12,7 +12,8 @@ jobs:
     runs-on: windows-2019
     name: Test PS
     steps:
-      - name: Run PS
+      - name: Install PS Modules
         run: |
           Install-Module -Name PowerShellGet -Force
           Install-Module 'PSDscResources' -Verbose -Force
+          Install-Module Microsoft365DSC -Force
