@@ -2,6 +2,7 @@ name: Test Windows Runner
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AZURE_DOMAIN: 
 
 on:
   push:
@@ -14,15 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install & Update PS Modules
-        run: |
-          Install-Module -Name PowerShellGet -Force
-          Install-Module 'PSDscResources' -Verbose -Force
-          Install-Module Microsoft365DSC -Force
-          Update-M365DSCDependencies
       - name: Get Creds & Run Build
         run: |
+          $domain = ${{ secrets.AZURE_DOMAIN}}
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
-          $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+          $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
           .\build.ps1 -RunAsAdmin

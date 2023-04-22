@@ -12,7 +12,7 @@
         Environment    = @{
             Name             = 'Production'
             ShortName        = 'PRD'
-            OrganizationName = $domain
+            OrganizationName = $ENV:domain
             Credentials = $ENV:psCreds
         }
         
