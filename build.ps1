@@ -93,6 +93,7 @@ if ($modules.ContainsKey("Microsoft365Dsc"))
 
         Write-Log -Message 'Installing Microsoft365Dsc' -Level 4
         $null = Install-Module -Name 'Microsoft365Dsc' -RequiredVersion $psGalleryVersion -Scope AllUsers
+        $null = Update-M365DSCDependencies
     }
     else
     {
