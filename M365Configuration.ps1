@@ -1,6 +1,13 @@
 Configuration M365Configuration
 {
 
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [System.Collections.Hashtable]
+        $Credentials
+    )
+    
     Import-DscResource -ModuleName M365Config
 
     node localhost
@@ -8,32 +15,32 @@ Configuration M365Configuration
 
         Exchange 'Exchange_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
 
         Office365 'Office365_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
 
         PowerPlatform 'PowerPlatform_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
 
         SecurityCompliance 'SecurityCompliance_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
 
         SharePoint 'SharePoint_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
 
         Teams 'Teams_Configuration'
         {
-            Credential    = $ConfigurationData.NonNodeData.Environment.Credentials
+            Credential    = $Credentials
         }
     }
 }

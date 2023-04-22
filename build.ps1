@@ -147,7 +147,7 @@ foreach ($datafile in $datafiles)
     Write-Log -Message "Processing: $($datafile.Name)" -Level 2
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
-    $null = M365Configuration -Credentials $ENV:psCreds -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
+    $null = M365Configuration -Credentials $env:psCreds -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
 }
 
 Write-Log -Message ' '
