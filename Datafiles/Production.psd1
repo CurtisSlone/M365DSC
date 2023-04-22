@@ -13,7 +13,6 @@
             Name             = 'Production'
             ShortName        = 'PRD'
             OrganizationName = "checkyourpockets.club"
-            Credentials = $ENV:psCreds
         }
         
         Exchange       = @{
