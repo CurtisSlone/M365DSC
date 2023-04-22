@@ -1,7 +1,7 @@
 Configuration M365Configuration
 {
 
-    Import-DscResource -ModuleName M365Config
+    Import-DscResource -ModuleName Microsoft365DSC
 
     node localhost
     {
