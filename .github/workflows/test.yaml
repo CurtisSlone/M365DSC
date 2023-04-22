@@ -17,7 +17,6 @@ jobs:
           Install-Module -Name PowerShellGet -Force
           Install-Module 'PSDscResources' -Verbose -Force
           Install-Module Microsoft365DSC -Force
-          Update-M365Dependencies
       - name: Get Creds
         run: |
           $username = ${{secrets.CLIENT_ID}}
