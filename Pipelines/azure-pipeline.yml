@@ -1,0 +1,34 @@
+trigger:
+  branches:
+    include:
+    - refs/heads/master
+
+variables:
+  buildFolderName: output
+  buildArtifactName: MOFFiles
+
+pool: 
+  vmImage: windows-latest
+
+stages:
+  - stage: Compile
+    jobs:
+      - job: CompileConfiguration
+        steps:
+        - task: AzurePowerShell@5
+          inputs:
+            azureSubscription: KeyVaultConnection
+            ScriptType: 'FilePath'
+            scriptPath: ./build.ps1
+            azurePowerShellVersion: latestVersion
+            pwsh: false
+            errorActionPreference: 'stop'
+            failOnStandardError: true
+
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish Artifacts to Pipeline'
+          inputs:
+            targetPath: '$(buildFolderName)/'
+            artifact: $(buildArtifactName)
+            publishLocation: 'pipeline'
+            parallel: true

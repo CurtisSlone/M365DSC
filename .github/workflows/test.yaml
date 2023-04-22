@@ -23,4 +23,8 @@ jobs:
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password) 
-          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Credential $Credential
+          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Path '.' -Credential $Credential
+      - name: Upload Configuration To Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: .\
