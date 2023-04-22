@@ -18,11 +18,9 @@ jobs:
           Install-Module 'PSDscResources' -Verbose -Force
           Install-Module Microsoft365DSC -Force
           Update-M365DSCDependencies
-      - name: Get Creds
+      - name: Get Creds & Export
         run: |
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
-          Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password) >> $GITHUB_ENV
-      - name: Test M365 Export
-        run: |
-          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Credential $env:Credential
+          $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password) 
+          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Credential $Credential
