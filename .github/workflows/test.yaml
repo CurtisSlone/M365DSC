@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: Install & Update PS Modules
         run: |
-          Install-PackageProvider NuGet -Force
           Install-Module -Name PowerShellGet -Force
           Install-Module 'PSDscResources' -Verbose -Force
           Install-Module Microsoft365DSC -Force
