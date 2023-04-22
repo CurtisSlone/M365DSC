@@ -1,14 +1,15 @@
 ﻿#requires -RunAsAdministrator
 
-######## FUNCTIONS ########
-function Write-Log
-{
-    param(
+param(
         [Parameter(Mandatory = $true)]
         [PSCredential]
         $Credentials
     )
-    
+
+######## FUNCTIONS ########
+function Write-Log
+{
+
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
