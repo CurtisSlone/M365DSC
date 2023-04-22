@@ -8,10 +8,10 @@ on:
     branches:
       - main
 jobs:
-  job2:
+  job1:
     runs-on: windows-2019
-    name: Apply Terraform Plan
+    name: Test PS
     steps:
       - name: Run PS
         run: |
-          echo "hello"
+          Install-Module -Name PowerShellGet -Force
