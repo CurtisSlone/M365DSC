@@ -10,8 +10,10 @@ on:
 jobs:
   job1:
     runs-on: windows-2019
-    name: Test PS
+    name: Build MOF
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Install & Update PS Modules
         run: |
           Install-Module -Name PowerShellGet -Force
@@ -23,4 +25,4 @@ jobs:
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
-          . .\build.ps1 -RunAsAdmin
+        run: .\build.ps1 -RunAsAdmin
