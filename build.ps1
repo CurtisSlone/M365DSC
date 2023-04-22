@@ -14,6 +14,13 @@ function Write-Log
         $Level = 0
     )
 
+    param
+    (
+        [Parameter()]
+        [PSCredential]
+        $Credentials
+    )
+
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     $indentation = '  ' * $Level
     $output = "[{0}] - {1}{2}" -f $timestamp, $indentation, $Message
@@ -147,7 +154,7 @@ foreach ($datafile in $datafiles)
     Write-Log -Message "Processing: $($datafile.Name)" -Level 2
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
-    $null = M365Configuration -Credentials $env:psCreds -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
+    $null = M365Configuration -Credentials $Credentials -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
 }
 
 Write-Log -Message ' '

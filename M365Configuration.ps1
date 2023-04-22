@@ -4,7 +4,7 @@ Configuration M365Configuration
     param
     (
         [Parameter(Mandatory = $true)]
-        [System.Collections.Hashtable]
+        [PSCredential]
         $Credentials
     )
     
