@@ -129,7 +129,6 @@ Write-Log -Message 'Retrieving Credentials' -Level 1
 [array]$datafiles = Get-ChildItem -Path (Join-Path -Path $workingDirectory -ChildPath 'Datafiles') -Filter *.psd1
 Write-Log -Message "Found $($datafiles.Count) data file(s)" -Level 2
 
-$credentials = @{}
 foreach ($datafile in $datafiles)
 {
     Write-Log -Message "Processing: $($datafile.Name)" -Level 3
