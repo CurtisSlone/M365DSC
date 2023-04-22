@@ -19,7 +19,7 @@ jobs:
           Install-Module Microsoft365DSC -Force
       - name: Get Creds
         run: |
-          $username = ${{secrets.CLIENT_ID}}
+          $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
       - name: Test M365 Export
