@@ -2,83 +2,27 @@
     AllNodes    = @(
         @{
             NodeName                    = 'localhost'
-            CertificateFile             = '.\DSCCertificate.cer'
             PsDscAllowPlainTextPassword = $true
             PsDscAllowDomainUser        = $true
         }
     )
+
     NonNodeData = @{
+
         Environment    = @{
             Name             = 'Production'
             ShortName        = 'PRD'
-            TenantId         = 'checkyourpockets.club'
-            OrganizationName = 'checkyourpockets.club'
+            OrganizationName = $domain
+            Credentials = $ENV:psCreds
         }
-        Accounts       = @(
-            @{
-                Workload = 'Exchange'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-            @{
-                Workload = 'Office365'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-            @{
-                Workload = 'PowerPlatform'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-            @{
-                Workload = 'SecurityCompliance'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-            @{
-                Workload = 'SharePoint'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-            @{
-                Workload = 'Teams'
-                Account  = 'DSCAdmin@checkyourpockets.club'
-            }
-        )
-        AppCredentials = @(
-            @{
-                Workload       = 'Exchange'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-            @{
-                Workload       = 'Office365'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-            @{
-                Workload       = 'PowerPlatform'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-            @{
-                Workload       = 'SecurityCompliance'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-            @{
-                Workload       = 'SharePoint'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-            @{
-                Workload       = 'Teams'
-                ApplicationId  = '622575b7-9a01-4dad-bb12-78bed8916517'
-                CertThumbprint = '8E443D486224BBC377071649A7511D2872E4BBAB'
-            }
-        )
+        
         Exchange       = @{
             OrganizationalRelationships = @(
                 @{
-                    Name                  = "fabrikam.com"
+                    Name                  = $domain
                     ArchiveAccessEnabled  = $false
                     DeliveryReportEnabled = $false
-                    DomainNames           = @("fabrikam.onmicrosoft.com")
+                    DomainNames           = @($domain)
                     Enabled               = $true
                     FreeBusyAccessEnabled = $true
                     FreeBusyAccessLevel   = "LimitedDetails"
@@ -93,18 +37,20 @@
                     TargetSharingEpr      = ""
                 }
             )
+
             AcceptedDomains             = @(
                 @{
-                    Identity        = 'checkyourpockets.club'
+                    Identity        = $domain
                     DomainType      = 'Authoritative'
                     MatchSubDomains = $false
                     OutboundOnly    = $false
                     Ensure          = 'Present'
                 }
             )
+
             DKIM                        = @(
                 @{
-                    Identity               = 'checkyourpockets.club'
+                    Identity               = $domain
                     Enabled                = $true
                     AdminDisplayName       = ''
                     BodyCanonicalization   = 'Relaxed'
@@ -112,10 +58,13 @@
                     KeySize                = 1024
                 }
             )
+
             InboundConnectors           = @()
             OutboundConnectors          = @()
         }
+
         Teams          = @{
+
             MeetingBroadcastConfiguration = @{
                 Identity                            = "Global"
                 AllowSdnProviderForBroadcastMeeting = $false
@@ -125,6 +74,7 @@
                 SdnProviderName                     = ""
                 SupportURL                          = "https://support.office.com/home/contact"
             }
+
             MeetingBroadcastPolicies      = @(
                 @{
                     Identity                        = "Global"
@@ -134,6 +84,7 @@
                     BroadcastRecordingMode          = "UserOverride"
                 }
             )
+
             MeetingConfiguration          = @{
                 Identity                    = "Global"
                 ClientAppSharingPort        = 50040
@@ -146,6 +97,7 @@
                 DisableAnonymousJoin        = $false
                 EnableQoS                   = $false
             }
+
             MeetingPolicies               = @(
                 @{
                     Identity                                   = "Global"

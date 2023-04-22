@@ -1,11 +1,7 @@
 ﻿@{
-    ModuleVersion        = '0.0.1'
+    ModuleVersion        = '1.0.0'
 
-    GUID                 = '8c07a295-6a8d-465d-933d-9f598d77fdfb'
-
-    Author               = 'Yorick Kuijs'
-
-    CompanyName          = 'Microsoft'
+    Author               = 'Curtis Slone'
 
     RequiredModules      = @()
 

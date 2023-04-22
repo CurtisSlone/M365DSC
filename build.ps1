@@ -23,29 +23,12 @@ function Write-Log
 ######## SCRIPT VARIABLES ########
 $dscScriptName = 'M365Configuration.ps1'
 
-# Azure variables
-$VaultName = 'anoa-dev-DSC-DSCNicNSG'
-
 ######## START SCRIPT ########
-
-if ($PSVersionTable.PSVersion.Major -ne 5)
-{
-    Write-Log -Message 'You are not using PowerShell v5. Please make sure you are using that version!'
-    return
-}
 
 Write-Log -Message '*********************************************************'
 Write-Log -Message '*      Starting M365 DSC Configuration Compilation      *'
 Write-Log -Message '*********************************************************'
 Write-Log -Message ' '
-
-if ($VaultName -eq 'anoa-dev-DSC-DSCNicNSG')
-{
-    Write-Log -Message "You haven't updated the VaultName parameter in the build.ps1 file yet."
-    Write-Log -Message 'Make sure you update this value before continuing!'
-    Write-Host "##vso[task.complete result=Failed;]Failed"
-    exit 30
-}
 
 $workingDirectory = $PSScriptRoot
 Set-Location -Path $workingDirectory
@@ -153,28 +136,7 @@ foreach ($datafile in $datafiles)
 
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
-    $credentials.$envName = @{}
-
-    Write-Log -Message "Getting passwords from KeyVault '$VaultName'" -Level 4
-    foreach ($function in $envData.NonNodeData.Accounts)
-    {
-        Write-Log -Message "Getting password from KeyVault for $($function.Workload)" -Level 4
-        $keyVaultSearchString = "{0}-Cred-{1}" -f $envName, $function.Workload
-        $secret = Get-AzKeyVaultSecret -VaultName $VaultName -Name $keyVaultSearchString -ErrorAction SilentlyContinue
-        if ($null -eq $secret)
-        {
-            Write-Log -Message "[ERROR] Cannot find $keyVaultSearchString in Azure KeyVault" -Level 5
-            Write-Error "Build failed!"
-            Write-Host "##vso[task.complete result=Failed;]Failed"
-            exit 20
-        }
-
-        $password = $secret.SecretValue
-        $username = $function.Account
-        $cred = New-Object System.Management.Automation.PSCredential($username, $password)
-
-        $credentials.$envName.$($function.Workload) = $cred
-    }
+    
 }
 
 Write-Log -Message ' '
@@ -185,10 +147,7 @@ foreach ($datafile in $datafiles)
     Write-Log -Message "Processing: $($datafile.Name)" -Level 2
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
-
-    $certPath = Join-Path -Path $workingDirectory -ChildPath $envData.AllNodes[0].CertificateFile.TrimStart('.\')
-    $envData.AllNodes[0].CertificateFile = $certPath
-    $null = M365Configuration -Credentials $credentials.$envName -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
+    $null = M365Configuration -Credentials $ENV:psCreds -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
 }
 
 Write-Log -Message ' '

@@ -4,36 +4,16 @@ Configuration Office365
     (
         [Parameter()]
         [PSCredential]
-        $Credential,
-
-        [Parameter()]
-        [System.String]
-        $ApplicationId,
-
-        [Parameter()]
-        [System.String]
-        $TenantId,
-
-        [Parameter()]
-        [System.String]
-        $Thumbprint
+        $Credential
     )
 
     Import-DscResource -ModuleName Microsoft365DSC
-
-    $paramCount = ($PSBoundParameters.GetEnumerator() | Where-Object -FilterScript { $_.Key -in 'ApplicationId', 'TenantId', 'Thumbprint' }).Count
-    if ($paramCount -gt 0 -and $paramCount -lt 3)
-    {
-        throw "Please specify ApplicationId, TenantId and Thumbprint"
-    }
 
     O365OrgCustomizationSetting 'EnableConfigurableMode'
     {
         IsSingleInstance      = "Yes"
         Ensure                = "Present"
-        ApplicationId         = $ApplicationId
-        TenantId              = $TenantId
-        CertificateThumbprint = $Thumbprint
+        Credential            = $Credential
     }
 
     O365AdminAuditLogConfig 'ConfigureAdminAuditLog'
@@ -41,8 +21,6 @@ Configuration Office365
         IsSingleInstance                = "Yes"
         UnifiedAuditLogIngestionEnabled = "Disabled"
         Ensure                          = "Present"
-        ApplicationId                   = $ApplicationId
-        TenantId                        = $TenantId
-        CertificateThumbprint           = $Thumbprint
+        Credential            = $Credential
     }
 }

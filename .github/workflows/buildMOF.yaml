@@ -18,13 +18,9 @@ jobs:
           Install-Module 'PSDscResources' -Verbose -Force
           Install-Module Microsoft365DSC -Force
           Update-M365DSCDependencies
-      - name: Get Creds & Export
+      - name: Get Creds & Run Build
         run: |
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
-          $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password) 
-          Export-M365DSCConfiguration -Components @("EXOAcceptedDomain") -Path '.' -Credential $Credential
-      - name: Upload Configuration To Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          path: .\
+          $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+          . .\build.ps1 -RunAsAdmin

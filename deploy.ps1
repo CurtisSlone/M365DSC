@@ -27,18 +27,7 @@ function Write-Log
     Write-Host $output
 }
 
-######## SCRIPT VARIABLES ########
-
-# Azure variables
-$VaultName = '<Your KeyVault>'
-
 ######## START SCRIPT ########
-
-if ($PSVersionTable.PSVersion.Major -ne 5)
-{
-    Write-Log -Message 'You are not using PowerShell v5. Please make sure you are using that version!'
-    return
-}
 
 Write-Log -Message '*********************************************************'
 Write-Log -Message '*      Starting M365 DSC Configuration Deployment       *'
@@ -46,14 +35,6 @@ Write-Log -Message '*********************************************************'
 Write-Log -Message "Environment to be deployed: $Environment"
 Write-Log -Message '*********************************************************'
 Write-Log -Message ' '
-
-if ($VaultName -eq '<Your KeyVault>')
-{
-    Write-Log -Message "You haven't updated the VaultName parameter in the build.ps1 file yet."
-    Write-Log -Message 'Make sure you update this value before continuing!'
-    Write-Host "##vso[task.complete result=Failed;]Failed"
-    exit 30
-}
 
 $workingDirectory = $PSScriptRoot
 Set-Location -Path $workingDirectory
@@ -146,29 +127,6 @@ $dataFilePath = Join-Path -Path $envPath -ChildPath "$Environment.psd1"
 $data = Import-PowerShellDataFile -Path $dataFilePath
 $envShortName = $data.NonNodeData.Environment.ShortName
 
-Write-Log -Message "Getting certificate secrets from KeyVault '$VaultName'"
-foreach ($appcred in $data.NonNodeData.AppCredentials)
-{
-    $kvCertName = "{0}-Cert-{1}" -f $envShortName, $appCred.Workload
-    Write-Log -Message "Processing $kvCertName" -Level 1
-
-    $secret = Get-AzKeyVaultSecret -VaultName $VaultName -Name $kvCertName -AsPlainText
-    $secretByte = [Convert]::FromBase64String($secret)
-    $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
-    $cert.Import($secretByte, "", "Exportable,PersistKeySet")
-
-    if ((Test-Path -Path "Cert:\LocalMachine\My\$($cert.Thumbprint)") -eq $false)
-    {
-        Write-Log -Message "Importing certificate $kvCertName with thumbprint $($cert.Thumbprint) into the Certificate Store" -Level 1
-        $CertStore = New-Object System.Security.Cryptography.X509Certificates.X509Store -ArgumentList "\\$($env:COMPUTERNAME)\My", 'LocalMachine'
-        $CertStore.Open('ReadWrite')
-        $CertStore.Add($cert)
-    }
-    else
-    {
-        Write-Log -Message "Certificate $kvCertName with thumbprint $($cert.Thumbprint) already exists. Skipping..." -Level 1
-    }
-}
 
 try
 {

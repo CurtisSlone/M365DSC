@@ -4,32 +4,12 @@ Configuration Exchange
     (
         [Parameter()]
         [PSCredential]
-        $Credential,
-
-        [Parameter()]
-        [System.String]
-        $ApplicationId,
-
-        [Parameter()]
-        [System.String]
-        $TenantId,
-
-        [Parameter()]
-        [System.String]
-        $Thumbprint
+        $Credential
     )
-
-    Import-DscResource -ModuleName Microsoft365DSC
-
-    $paramCount = ($PSBoundParameters.GetEnumerator() | Where-Object -FilterScript { $_.Key -in 'ApplicationId', 'TenantId', 'Thumbprint' }).Count
-    if ($paramCount -gt 0 -and $paramCount -lt 3)
-    {
-        throw 'Please specify ApplicationId, TenantId and Thumbprint'
-    }
 
     $OrganizationName = $ConfigurationData.NonNodeData.Environment.OrganizationName
 
-    EXOOrganizationConfig e1436c18-2266-4c91-8f92-bc09a832ccb8
+    EXOOrganizationConfig 'EXOOrganizationConfig'
     {
         IsSingleInstance                                          = "Yes"
         ActivityBasedAuthenticationTimeoutEnabled                 = $True
@@ -85,9 +65,7 @@ Configuration Exchange
         VisibleMeetingUpdateProperties                            = "Location,AllProperties:15"
         WebPushNotificationsDisabled                              = $False
         WebSuggestedRepliesDisabled                               = $False
-        ApplicationId                                             = $ApplicationId
-        TenantId                                                  = $TenantId
-        CertificateThumbprint                                     = $Thumbprint
+        Credential                                                = $Credential
     }
 
     #region EXOOrganizationRelationships
@@ -112,9 +90,7 @@ Configuration Exchange
             TargetOwaURL          = $OrganizationalRelationship.TargetOwaURL
             TargetSharingEpr      = $OrganizationalRelationship.TargetSharingEpr
             Ensure                = "Present"
-            ApplicationId         = $ApplicationId
-            TenantId              = $TenantId
-            CertificateThumbprint = $Thumbprint
+            Credential            = $Credential
         }
     }
     #endregion
@@ -129,9 +105,7 @@ Configuration Exchange
             MatchSubDomains       = $AcceptedDomain.MatchSubDomains
             OutboundOnly          = $AcceptedDomain.OutboundOnly
             Ensure                = $AcceptedDomain.Ensure
-            ApplicationId         = $ApplicationId
-            TenantId              = $TenantId
-            CertificateThumbprint = $Thumbprint
+            Credential            = $Credential
         }
     }
     #endregion
@@ -148,9 +122,7 @@ Configuration Exchange
             HeaderCanonicalization = $DKIM.HeaderCanonicalization
             KeySize                = $DKIM.KeySize
             Ensure                 = "Present"
-            ApplicationId          = $ApplicationId
-            TenantId               = $TenantId
-            CertificateThumbprint  = $Thumbprint
+            Credential             = $Credential
         }
     }
     #endregion
@@ -163,12 +135,10 @@ Configuration Exchange
         EnableATPForSPOTeamsODB       = $True
         EnableSafeDocs                = $True
         Ensure                        = "Present"
-        ApplicationId                 = $ApplicationId
-        TenantId                      = $TenantId
-        CertificateThumbprint         = $Thumbprint
+        Credential                    = $Credential
     }
 
-    EXOMailTips 1179fde6-b14e-48e3-80c2-f04cc9ae30fa
+    EXOMailTips 'OrgWideMailTips'
     {
         Organization                          = "$OrganizationName"
         MailTipsAllTipsEnabled                = $True
@@ -177,9 +147,7 @@ Configuration Exchange
         MailTipsLargeAudienceThreshold        = 25
         MailTipsMailboxSourcedTipsEnabled     = $True
         Ensure                                = "Present"
-        ApplicationId                         = $ApplicationId
-        TenantId                              = $TenantId
-        CertificateThumbprint                 = $Thumbprint
+        Credential                            = $Credential
     }
 
     #region EXOInboundConnectors
@@ -202,9 +170,7 @@ Configuration Exchange
             TlsSenderCertificateName     = $InboundConnector.TlsSenderCertificateName
             TreatMessagesAsInternal      = $InboundConnector.TreatMessagesAsInternal
             Ensure                       = "Present"
-            ApplicationId                = $ApplicationId
-            TenantId                     = $TenantId
-            CertificateThumbprint        = $Thumbprint
+            Credential                   = $Credential
         }
     }
     #endregion
@@ -230,9 +196,7 @@ Configuration Exchange
             UseMxRecord                   = $OutboundConnector.UseMxRecord
             ValidationRecipients          = $OutboundConnector.ValidationRecipients
             Ensure                        = "Present"
-            ApplicationId                 = $ApplicationId
-            TenantId                      = $TenantId
-            CertificateThumbprint         = $Thumbprint
+            Credential                    = $Credential
         }
     }
     #endregion
