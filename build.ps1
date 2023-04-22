@@ -27,6 +27,7 @@ function Write-Log
     Write-Host $output
 }
 
+
 ######## SCRIPT VARIABLES ########
 $dscScriptName = 'M365Configuration.ps1'
 
