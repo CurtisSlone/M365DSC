@@ -3,7 +3,7 @@
 param(
         [Parameter(Mandatory = $true)]
         [PSCredential]
-        $Credentials
+        $AdminCreds
     )
 
 ######## FUNCTIONS ########
@@ -146,7 +146,7 @@ foreach ($datafile in $datafiles)
     $credentials.$envName = @{}
     foreach ($function in $envData.NonNodeData.Accounts)
     {
-        $credentials.$envName.$($function.Workload) = $Credentials
+        $credentials.$envName.$($function.Workload) = $AdminCreds
     }
     
 }
