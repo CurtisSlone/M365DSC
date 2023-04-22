@@ -18,7 +18,7 @@ function Write-Log
 
         [Parameter()]
         [System.Int32]
-        $Level = 0,
+        $Level = 0
     )
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
