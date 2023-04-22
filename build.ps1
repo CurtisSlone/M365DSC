@@ -11,12 +11,9 @@ function Write-Log
 
         [Parameter()]
         [System.Int32]
-        $Level = 0
-    )
+        $Level = 0,
 
-    param
-    (
-        [Parameter()]
+        [Parameter(Mandatory = $true)]
         [PSCredential]
         $Credentials
     )
