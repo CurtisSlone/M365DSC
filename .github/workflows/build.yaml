@@ -1,9 +1,11 @@
-name: Test Windows Runner
+name: Build and Deploy MOF
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 on:
-  - pull_request
+  push:
+    branches:
+      - main
 permissions:
   contents: read
   pull-requests: write
@@ -22,9 +24,4 @@ jobs:
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
           .\build.ps1 -AdminCreds $psCreds
-          dir D:\a\M365DSC\M365DSC\Output
-      - name: Upload MOF
-        uses: actions/upload-artifact@v3
-        with:
-          name: localhost.mof
-          path: D:\a\M365DSC\M365DSC\Output
+          .\deploy.ps1
