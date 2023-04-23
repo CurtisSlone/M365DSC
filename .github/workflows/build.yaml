@@ -2,11 +2,11 @@ name: Test Windows Runner
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 on:
-  push:
-    branches:
-      - main
+  - pull-request
+permissions:
+  contents: read
+  pull-requests: write
 jobs:
   job1:
     runs-on: windows-latest
@@ -21,4 +21,5 @@ jobs:
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
-          .\build.ps1 -AdminCreds $psCreds 
+          .\build.ps1 -AdminCreds $psCreds
+          dir D:\a\M365DSC\M365DSC\Output
