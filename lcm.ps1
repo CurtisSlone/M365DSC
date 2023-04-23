@@ -1,6 +1,6 @@
 Configuration ConfigureLCM
 {
- Import-DscResource -ModuleName PsDesiredStateConfiguration -SkipEditionCheck
+ Import-DscResource -ModuleName PsDesiredStateConfiguration 
  node localhost
  {
     LocalConfigurationManager
