@@ -17,6 +17,7 @@ jobs:
       - name: Get Creds & Run Build
         shell: powershell
         run: |
+          $PSVersionTable.PSVersion
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
