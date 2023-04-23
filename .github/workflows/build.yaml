@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Get Creds & Run Build
+      - name: Get Creds, Build, Deploy
         shell: powershell
         run: |
           $PSVersionTable.PSVersion
@@ -24,4 +24,5 @@ jobs:
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
           .\build.ps1 -AdminCreds $psCreds
-          .\deploy.ps1
+          dir
+          .\deploy.ps1 -Environment Production
