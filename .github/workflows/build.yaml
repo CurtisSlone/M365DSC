@@ -19,5 +19,6 @@ jobs:
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+          Install-Module 'PSDscResources' -Verbose -Force
           .\lcm.ps1
           .\build.ps1 -AdminCreds $psCreds 
