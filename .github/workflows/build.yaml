@@ -24,5 +24,4 @@ jobs:
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
           .\build.ps1 -AdminCreds $psCreds
-          dir
-          .\deploy.ps1 -Environment Production
+          .\deploy.ps1 -Environment "Production"
