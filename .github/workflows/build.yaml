@@ -16,8 +16,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Get Creds & Run Build
         run: |
-          Enable-PSRemoting -Force
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+          .\lcm.ps1
           .\build.ps1 -AdminCreds $psCreds 
