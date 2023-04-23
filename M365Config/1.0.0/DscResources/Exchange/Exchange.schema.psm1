@@ -7,6 +7,8 @@ Configuration Exchange
         $Credential
     )
 
+    Import-DscResource -ModuleName Microsoft365DSC
+    
     $OrganizationName = $ConfigurationData.NonNodeData.Environment.OrganizationName
 
     EXOOrganizationConfig 'EXOOrganizationConfig'
