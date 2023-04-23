@@ -24,7 +24,7 @@ jobs:
           .\build.ps1 -AdminCreds $psCreds
           dir D:\a\M365DSC\M365DSC\Output
       - name: Upload MOF
-        uses: actionsactions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: localhost.mof
           path: D:\a\M365DSC\M365DSC\Output
