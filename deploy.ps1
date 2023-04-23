@@ -44,7 +44,8 @@ Write-Log -Message ' '
 
 Write-Log -Message 'Checking for presence of specified environment'
 Write-Log -Message ' '
-$environmentPath = Join-Path -Path $workingDirectory -ChildPath $Environment
+$ouputPath = Join-Path -Path $workingDirectory -ChiildPath 'Output'
+$environmentPath = Join-Path -Path $outputhPath -ChildPath $Environment
 if ((Test-Path -Path $environmentPath) -eq $false)
 {
     Write-Error "Specified environment not found"
