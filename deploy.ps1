@@ -44,7 +44,7 @@ Write-Log -Message ' '
 
 Write-Log -Message 'Checking for presence of specified environment'
 Write-Log -Message ' '
-$environmentPath = Join-Path -Path $workingDirectory -ChildPath $Environment
+$environmentPath = Join-Path -Path $workingDirectory -ChildPath '\Output\Production'
 if ((Test-Path -Path $environmentPath) -eq $false)
 {
     Write-Error "Specified environment not found"
@@ -122,7 +122,7 @@ else
     exit 10
 }
 
-$envPath = Join-Path -Path $workingDirectory -ChildPath $Environment
+$envPath = Join-Path -Path $workingDirectory -ChildPath '\Output\Production'
 $dataFilePath = Join-Path -Path $envPath -ChildPath "$Environment.psd1"
 $data = Import-PowerShellDataFile -Path $dataFilePath
 $envShortName = $data.NonNodeData.Environment.ShortName
