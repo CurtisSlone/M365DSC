@@ -9,7 +9,7 @@ Configuration PowerPlatform
 
     Import-DscResource -ModuleName Microsoft365DSC
 
-    PPTenantSettings 1ae1e6d9-83ae-4da4-8546-dca6a16028d4
+    PPTenantSettings "Org-PPTenantSettings"
     {
         IsSingleInstance                               = "Yes"
         DisableBingVideoSearch                         = $False

@@ -3,3 +3,6 @@ output/
 testscripts/
 Production/
 **.bak
+
+M65Bup.ps1
+M65Config-main.ps1

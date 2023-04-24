@@ -42,5 +42,15 @@ Configuration M365Configuration
         {
             Credential    = $Credentials.Teams
         }
+
+        AAD 'AAD_Configuration'
+        {
+            Credential    = $Credentials.AAD
+        }
+
+        Intune 'Intune_Configuration'
+        {
+            Credential = $Credentials.Intune
+        }
     }
 }
