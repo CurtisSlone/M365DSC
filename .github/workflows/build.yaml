@@ -20,6 +20,8 @@ jobs:
         shell: powershell
         run: |
           $PSVersionTable.PSVersion
+          winrm quickconfig -Force
+           Set-ExecutionPolicy Unrestricted -Force
           $username = "${{secrets.CLIENT_ID}}"
           $password = ConvertTo-SecureString "${{secrets.CLIENT_SECRET}}" -AsPlainText -Force
           $psCreds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
