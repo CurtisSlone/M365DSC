@@ -148,6 +148,7 @@ foreach ($datafile in $datafiles)
     foreach ($function in $envData.NonNodeData.Accounts)
     {
         $credentials.$envName.$($function.Workload) = $AdminCreds
+        Write-Log -Message "$function.Workload"
     }
     Write-Host -Message "Wrote $datafile" -Level 1
 }
