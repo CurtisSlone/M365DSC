@@ -35,10 +35,13 @@
                 Workload = 'Teams'
             }
             @{
-                Workload = "AAD"
+                Workload = 'AzureAD'
             }
             @{
-                Workload = "Intune"
+                Workload = 'Intune'
+            }
+            @{
+                Workload = 'OneDrive'
             }
         )
 
@@ -170,50 +173,20 @@
             )
         }
 
-        AAD = @{
-            Globals = @{
-                ExcludeUsers                             = @("curtis@checkyourpockets.club");
-            }
+        AzureAD = @{
             ConditionalAccessPolicies = @(
                 @{
-                    ApplicationEnforcedRestrictionsIsEnabled = $False;
-                    BuiltInControls                          = @("mfa");
-                    ClientAppTypes                           = @("all");
-                    CloudAppSecurityIsEnabled                = $False;
-                    CloudAppSecurityType                     = "";
-                    Credential                               = $Credscredential;
-                    CustomAuthenticationFactors              = @();
-                    DeviceFilterRule                         = "";
-                    DisplayName                              = "Require MFA - High-Privileged Roles";
-                    Ensure                                   = "Present";
-                    ExcludeApplications                      = @("0000000a-0000-0000-c000-000000000000");
-                    ExcludeExternalTenantsMembers            = @();
-                    ExcludeExternalTenantsMembershipKind     = "";
-                    ExcludeGroups                            = @();
-                    ExcludeLocations                         = @();
-                    ExcludePlatforms                         = @();
-                    ExcludeRoles                             = @();
-                    ExcludeUsers                             = @("curtis@checkyourpockets.club");
-                    GrantControlOperator                     = "OR";
-                    Id                                       = "6dd444bc-650c-4985-8ad5-b2256145f457";
-                    IncludeApplications                      = @("All");
-                    IncludeExternalTenantsMembers            = @();
-                    IncludeExternalTenantsMembershipKind     = "";
-                    IncludeGroups                            = @();
-                    IncludeLocations                         = @();
-                    IncludePlatforms                         = @();
-                    IncludeRoles                             = @("Global Administrator","Privileged Role Administrator","User Administrator","SharePoint Administrator","Exchange Administrator","Hybrid Identity Administrator","Application Administrator","Cloud Application Administrator");
-                    IncludeUserActions                       = @();
-                    IncludeUsers                             = @();
-                    PersistentBrowserIsEnabled               = $False;
-                    PersistentBrowserMode                    = "";
-                    SignInFrequencyIsEnabled                 = $False;
-                    SignInFrequencyType                      = "";
-                    SignInRiskLevels                         = @();
-                    State                                    = "enabled";
-                    UserRiskLevels                           = @();
+                    
                 }
             )
+        }
+
+        Intune = @{
+            
+        }
+
+        OneDrive = @{
+
         }
     }
 }

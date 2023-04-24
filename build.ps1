@@ -149,7 +149,7 @@ foreach ($datafile in $datafiles)
     {
         $credentials.$envName.$($function.Workload) = $AdminCreds
     }
-    
+    Write-Host -Message "Wrote $datafile" -Level 1
 }
 
 Write-Log -Message ' '
