@@ -114,17 +114,16 @@ Write-Log -Message 'Preparing MOF compilation'
 Write-Log -Message "Loading DSC configuration '$dscScriptName'" -Level 1
 . (Join-Path -Path $workingDirectory -ChildPath $dscScriptName)
 
-$outputFolder = Join-Path -Path $workingDirectory -ChildPath 'Output'
-Write-Log -Message "Preparing OutputFolder '$outputFolder'" -Level 1
-if ((Test-Path -Path $outputFolder))
+Write-Log -Message "Preparing OutputFolder '$workingDirectory'" -Level 1
+if ((Test-Path -Path $workingDirectory))
 {
-    Remove-Item -Path $outputFolder -Recurse -Confirm:$false
+    Remove-Item -Path $workingDirectory -Recurse -Confirm:$false
 }
-$null = New-Item -Path $outputFolder -ItemType 'Directory'
+$null = New-Item -Path $workingDirectory -ItemType 'Directory'
 
-Copy-Item -Path 'DscResources.psd1' -Destination $outputFolder
-Copy-Item -Path 'deploy.ps1' -Destination $outputFolder
-Copy-Item -Path 'checkdsccompliancy.ps1' -Destination $outputFolder
+Copy-Item -Path 'DscResources.psd1' -Destination $workingDirectory
+Copy-Item -Path 'deploy.ps1' -Destination $workingDirectory
+Copy-Item -Path 'checkdsccompliancy.ps1' -Destination $workingDirectory
 
 Write-Log -Message 'Retrieving Credentials' -Level 1
 [array]$datafiles = Get-ChildItem -Path (Join-Path -Path $workingDirectory -ChildPath 'Datafiles') -Filter *.psd1
@@ -135,7 +134,7 @@ foreach ($datafile in $datafiles)
 {
     Write-Log -Message "Processing: $($datafile.Name)" -Level 3
 
-    $outputPathDataFile = Join-Path -Path $outputFolder -ChildPath $datafile.BaseName
+    $outputPathDataFile = Join-Path -Path $workingDirectory -ChildPath $datafile.BaseName
     if ((Test-Path -Path $outputPathDataFile) -eq $false)
     {
         $null = New-Item -Path $outputPathDataFile -ItemType Directory
@@ -162,7 +161,7 @@ foreach ($datafile in $datafiles)
     $envData = Import-PowerShellDataFile -Path $datafile.FullName
     $envName = $envData.NonNodeData.Environment.ShortName
     Write-Log -Message "Check"
-    $null = M365Configuration -Credentials $credentials.$envName -ConfigurationData $envData -OutputPath $outputFolder\$($datafile.BaseName)
+    $null = M365Configuration -Credentials $credentials.$envName -ConfigurationData $envData -OutputPath $workingDirectory\$($datafile.BaseName)
 }
 
 Write-Log -Message ' '
