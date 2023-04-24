@@ -121,10 +121,6 @@ if ((Test-Path -Path $workingDirectory))
 }
 $null = New-Item -Path $workingDirectory -ItemType 'Directory'
 
-Copy-Item -Path 'DscResources.psd1' -Destination $workingDirectory
-Copy-Item -Path 'deploy.ps1' -Destination $workingDirectory
-Copy-Item -Path 'checkdsccompliancy.ps1' -Destination $workingDirectory
-
 Write-Log -Message 'Retrieving Credentials' -Level 1
 [array]$datafiles = Get-ChildItem -Path (Join-Path -Path $workingDirectory -ChildPath 'Datafiles') -Filter *.psd1
 Write-Log -Message "Found $($datafiles.Count) data file(s)" -Level 2
