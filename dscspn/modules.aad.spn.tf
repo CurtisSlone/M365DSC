@@ -106,6 +106,8 @@ module "dsc_aad_spn" {
   # Adding Directory Roles
   service_principal_directory_roles = [
     "9b895d92-2cd3-44c7-9d02-a6ac2d5ea5c3", // Application Administrator
-    "9360feb5-f418-4baa-8175-e2a00bac4301" // Dirdectory Writer
+    "9360feb5-f418-4baa-8175-e2a00bac4301", // Dirdectory Writer
+    "0526716b-113d-4c15-b2c8-68e3c22b9f80", // Authentication Policy Administrator
+    "c4e39bd9-1100-46d3-8c65-fb160da0071f", // Authentication Administrator
   ]
 }

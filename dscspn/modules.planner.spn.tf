@@ -2,11 +2,11 @@
 # DSC Creation
 #
 
-module "dsc_intune_spn" {
+module "dsc_planner_spn" {
     source  = "./spn-module"
 
-    service_principal_name = "dsc_intune_spn"
-    service_principal_description = "Service Principal that manages the M365DSC intune Resource"
+    service_principal_name = "dsc_exchange_spn"
+    service_principal_description = "Service Principal that manages the M365DSC planner Resource"
 
     enable_service_principal_certificate = false
     service_principal_password_rotation_in_years = 1
@@ -20,12 +20,23 @@ module "dsc_intune_spn" {
   ]
 
   # Adding Delegated Permission Grants
-  service_principal_graph_permissions = []
+  service_principal_graph_permissions = [
+    {
+        id = "Tasks.ReadWrite"
+        type = "Scope"
+    },
+    {
+        id = "Group.ReadWrite.All"
+        type = "Scope"
+    },
+    {
+        id = "User.Read.All"
+        type = "Scope"
+    },
+  ]
 
   # Adding Directory Roles
   service_principal_directory_roles = [
-    "29232cdf-9323-42fd-ade2-1d097af3e4de", // Exchange Administrator
-    "31392ffb-586c-42d1-9346-e59415a2cc4e",  // Exchange Recipient Administrator
-    "194ae4cb-b126-40b2-bd5b-6091b380977d" // Security Administrator
+    "fdd7a751-b60b-444a-984c-02652fe8fa1c", // Groups Administrator
   ]
 }
