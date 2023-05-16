@@ -2,11 +2,11 @@
 # DSC Creation
 #
 
-module "dsc_exchange_spn" {
+module "dsc_intune_spn" {
     source  = "./spn-module"
 
-    service_principal_name = "dsc_exchange_spn"
-    service_principal_description = "Service Principal that manages the M365DSC Exchange Resource"
+    service_principal_name = "dsc_intune_spn"
+    service_principal_description = "Service Principal that manages the M365DSC intune Resource"
 
     enable_service_principal_certificate = false
     service_principal_password_rotation_in_years = 1
