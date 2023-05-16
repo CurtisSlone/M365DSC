@@ -25,13 +25,15 @@ module "dsc_sharepoint_spn" {
         id = "Domain.Read.All"
         type = "Scope"
     },
+    {
+        id = "Sites.FullControl.All"
+        type = "Scope"
+    },
   ]
 
   # Adding Directory Roles
   service_principal_directory_roles = [
-    "fdd7a751-b60b-444a-984c-02652fe8fa1c", // Groups Administrator
-    "3790c1fb9-7f7d-4f88-86a1-ef1f95c05c1b",  // AzureAD Joined Device Local Administrator
-    "7698a772-787b-4ac8-901f-60d6b08affd2" // Cloud Device Administrator
+    "f28a1f50-f6e7-4571-818b-6a12f2af6b6c", // SharePoint Administrator
   ]
 }
 
