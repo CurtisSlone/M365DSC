@@ -6,3 +6,11 @@ Production/
 
 M65Bup.ps1
 M65Config-main.ps1
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
