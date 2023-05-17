@@ -2,6 +2,7 @@ backup/
 output/
 testscripts/
 Production/
+certs/
 **.bak
 
 M65Bup.ps1

@@ -8,7 +8,7 @@ module "dsc_aad_spn" {
     service_principal_name = "dsc_aad_spn"
     service_principal_description = "Service Principal that manages the M365DSC AAD Resource"
 
-    enable_service_principal_certificate = false
+    enable_service_principal_certificate = true
     service_principal_password_rotation_in_years = 1
 
   # Adding roles and scope to service principal
