@@ -4,3 +4,12 @@ Export-Certificate -Cert $teamscert -FilePath .\teams.cer
 
 openssl req -subj '/CN=myclientcertificate/O=MyCompany, Inc./ST=CA/C=US' -new -newkey rsa:4096 -sha256 -days 730 -nodes -x509 -keyout client.key -out client.crt
 openssl pkcs12 -export -password pass:"Pa55w0rd123" -out client.pfx -inkey client.key -in client.crt
+
+# Install Required Packages
+Install-PackageProvider NuGet -Force
+Install-Module -Name PowerShellGet -Force
+Register-PSRepository -Default
+Install-Module Az.KeyVault -Force
+Install-Module 'PSDscResources' -Verbose -Force
+Install-Module Microsoft365DSC -Force
+Install-Module  Az.Resources -Force
