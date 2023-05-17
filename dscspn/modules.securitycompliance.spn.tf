@@ -19,6 +19,14 @@ module "dsc_securitycenter_spn" {
     },
   ]
 
+   # Adding Delegated Permission Grants
+  service_principal_graph_permissions = [
+    {
+        id = "Policy.Read.All"
+        type = "Scope"
+    },
+  ]
+  
   # Adding Directory Roles
   service_principal_directory_roles = [
     "194ae4cb-b126-40b2-bd5b-6091b380977d", // Security Administrator

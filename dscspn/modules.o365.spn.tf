@@ -34,7 +34,6 @@ module "dsc_o365_spn" {
   # Adding Directory Roles
   service_principal_directory_roles = [
     "fdd7a751-b60b-444a-984c-02652fe8fa1c", // Groups Administrator
-    "3790c1fb9-7f7d-4f88-86a1-ef1f95c05c1b",  // AzureAD Joined Device Local Administrator
     "7698a772-787b-4ac8-901f-60d6b08affd2" // Cloud Device Administrator
   ]
 }

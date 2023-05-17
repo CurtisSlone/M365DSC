@@ -20,7 +20,12 @@ module "dsc_exchange_spn" {
   ]
 
   # Adding Delegated Permission Grants
-  service_principal_graph_permissions = []
+  service_principal_graph_permissions = [
+    {
+        id = "Policy.Read.All"
+        type = "Scope"
+    },
+  ]
 
   # Adding Directory Roles
   service_principal_directory_roles = [

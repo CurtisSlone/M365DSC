@@ -54,7 +54,7 @@ module "dsc_intune_spn" {
   # Adding Directory Roles
   service_principal_directory_roles = [
     "3a2c62db-5318-420d-8d74-23affee5d9d5", // Intune Administrator
-    "39f06204d-73c1-4d4c-880a-6edb90606fd8",  // AzureAD Joined Device Local Administrator
+    "9f06204d-73c1-4d4c-880a-6edb90606fd8",  // AzureAD Joined Device Local Administrator
     "7698a772-787b-4ac8-901f-60d6b08affd2" // Cloud Device Administrator
   ]
 }
