@@ -3,6 +3,7 @@ output/
 testscripts/
 Production/
 certs/
+**/spncerts/*
 **.bak
 
 M65Bup.ps1
