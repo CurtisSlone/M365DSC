@@ -30,3 +30,10 @@ module "dsc_OD_spn" {
     },
   ]
 }
+
+resource "azuread_application_certificate" "main" {
+  application_object_id = module.dsc_OD_spn.application_object_id
+  type                  = "AsymmetricX509Cert"
+  value                 = file("./client.crt")
+  end_date              = module.dsc_OD_spn.time_rotation
+}
