@@ -1,0 +1,3 @@
+$teamscert = New-SelfSignedCertificate -Type DocumentEncryptionCertLegacyCsp -DnsName 'teams DSC' -HashAlgorithm SHA256 -NotAfter (Get-Date).AddYears(10)
+
+Export-Certificate -Cert $teamscert -FilePath .\teams.cer
