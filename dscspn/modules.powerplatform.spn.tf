@@ -11,6 +11,15 @@ module "dsc_powerplatform_spn" {
     enable_service_principal_certificate = false
     service_principal_password_rotation_in_years = 1
 
+   # Adding Delegated Permission Grants
+  service_principal_graph_permissions = [
+    {
+        id = "Policy.Read.All"
+        type = "Scope"
+    },
+  ]
+
+
   # Adding roles and scope to service principal
   service_principal_assignments = [
     {
