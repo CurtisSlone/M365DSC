@@ -5,7 +5,7 @@
 module "dsc_o365_spn" {
     source  = "./spn-module"
 
-    service_principal_name = "dsc_exchange_spn"
+    service_principal_name = "dsc_o365_spn"
     service_principal_description = "Service Principal that manages the M365DSC O365 Resource"
 
     enable_service_principal_certificate = false
@@ -18,6 +18,9 @@ module "dsc_o365_spn" {
       role_definition_name = "Contributor"
     },
   ]
+
+  # Has MsGraph Perms?
+  has_graph_perms = true
 
   # Adding Delegated Permission Grants
   service_principal_graph_permissions = [

@@ -19,6 +19,9 @@ module "dsc_aad_spn" {
     },
   ]
 
+  # Has MsGraph Perms?
+  has_graph_perms = true
+  
   # Adding Delegated Permission Grants
   service_principal_graph_permissions = [
     {
@@ -59,10 +62,6 @@ module "dsc_aad_spn" {
     },
     {
         id = "Policy.ReadWrite.ConditionalAccess"
-        type = "Scope"
-    },
-    {
-        id = "RoleManagement.Read.Director"
         type = "Scope"
     },
     {

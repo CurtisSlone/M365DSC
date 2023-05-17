@@ -19,6 +19,9 @@ module "dsc_exchange_spn" {
     },
   ]
 
+# Has MsGraph Perms?
+  has_graph_perms = true
+
   # Adding Delegated Permission Grants
   service_principal_graph_permissions = [
     {

@@ -2,10 +2,10 @@
 # DSC Creation
 #
 
-module "dsc_securitycenter_spn" {
+module "dsc_security_compliance_spn" {
     source  = "./spn-module"
 
-    service_principal_name = "dsc_exchange_spn"
+    service_principal_name = "dsc_security_compliance_spn"
     service_principal_description = "Service Principal that manages the M365DSC securitycenter Resource"
 
     enable_service_principal_certificate = false
@@ -19,6 +19,9 @@ module "dsc_securitycenter_spn" {
     },
   ]
 
+  # Has MsGraph Perms?
+  has_graph_perms = true
+
    # Adding Delegated Permission Grants
   service_principal_graph_permissions = [
     {
@@ -26,7 +29,7 @@ module "dsc_securitycenter_spn" {
         type = "Scope"
     },
   ]
-  
+
   # Adding Directory Roles
   service_principal_directory_roles = [
     "194ae4cb-b126-40b2-bd5b-6091b380977d", // Security Administrator

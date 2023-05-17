@@ -7,15 +7,19 @@ resource "azuread_application" "app" {
   owners           = [data.azuread_client_config.current.object_id]
   sign_in_audience = var.sign_in_audience
 
-  required_resource_access {
-    resource_app_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
+  dynamic "required_resource_access" {
+    for_each = var.has_graph_perms ? [1] : []
 
-    dynamic "resource_access" {
-      for_each = var.service_principal_graph_permissions
+    content {
+      resource_app_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
 
-      content {
-        id = azuread_service_principal.msgraph.oauth2_permission_scope_ids[resource_access.value.id]
-        type = resource_access.value.type
+      dynamic "resource_access" {
+        for_each = var.service_principal_graph_permissions
+
+        content {
+          id = azuread_service_principal.msgraph.oauth2_permission_scope_ids[resource_access.value.id]
+          type = resource_access.value.type
+        }
       }
     }
   }
@@ -29,6 +33,7 @@ resource "azuread_service_principal" "sp" {
 }
 
 resource "azuread_service_principal_delegated_permission_grant" "spn_permission_grant" {
+  count = var.has_graph_perms ? 1 : 0
   depends_on = [ 
     azuread_service_principal.sp,
     azuread_service_principal.msgraph
@@ -39,6 +44,8 @@ resource "azuread_service_principal_delegated_permission_grant" "spn_permission_
     for obj in var.service_principal_graph_permissions :
     [obj.id]
   ])
+
+
 }
 
 
